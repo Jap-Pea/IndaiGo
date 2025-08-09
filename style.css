@@ -9,7 +9,9 @@
   --glass: rgba(255, 255, 255, 0.06);
 }
 
-/* Base */
+/* ======================
+   Base Styles
+====================== */
 * {
   box-sizing: border-box;
 }
@@ -29,7 +31,9 @@ img {
   display: block;
 }
 
-/* Utils */
+/* ======================
+   Utility Classes
+====================== */
 .section {
   max-width: 1100px;
   margin: 0 auto;
@@ -41,28 +45,77 @@ img {
   font-weight: 800;
   letter-spacing: 0.2px;
 }
+
+/* Buttons */
 .btn {
   display: inline-block;
   padding: 12px 18px;
   border-radius: 10px;
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  background-size: 200% auto;
   color: #000;
-  text-decoration: none;
   font-weight: 700;
+  text-decoration: none;
+  transition: background 0.4s ease, color 0.4s ease, transform 0.3s ease;
 }
-.btn--sm {
-  padding: 8px 12px;
-  font-weight: 600;
+.btn:hover {
+  background: linear-gradient(90deg, #ff3b81, #00e5ff); /* swapped colors */
+  color: #fff; /* white text on hover */
+  transform: scale(1.05); /* zoom */
 }
+
+/* Ghost buttons */
 .btn--ghost {
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 10px;
   background: transparent;
   color: var(--text);
   border: 1px solid var(--glass);
+  font-weight: 700;
   backdrop-filter: blur(6px);
-  padding: 10px 14px;
+  transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease,
+    transform 0.3s ease;
+}
+.btn--ghost:hover {
+  background: linear-gradient(90deg, #00e5ff, #ff3b81); /* neon fill */
+  color: #000; /* dark text */
+  border-color: transparent; /* hide border when filled */
+  transform: scale(1.05); /* zoom */
 }
 
-/* Header */
+/* ======================
+   Animations
+====================== */
+@keyframes neonPulse {
+  0% {
+    text-shadow: 0 0 6px rgba(0, 229, 255, 0.4),
+      0 0 12px rgba(255, 59, 129, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 10px rgba(0, 229, 255, 0.6),
+      0 0 20px rgba(255, 59, 129, 0.5);
+  }
+  100% {
+    text-shadow: 0 0 6px rgba(0, 229, 255, 0.4),
+      0 0 12px rgba(255, 59, 129, 0.3);
+  }
+}
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* ======================
+   Header
+====================== */
 .top {
   position: sticky;
   top: 0;
@@ -75,28 +128,20 @@ img {
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 .top__brand {
+  font-size: 1.8rem;
   font-weight: 900;
   letter-spacing: 0.5px;
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  background-size: 200% auto;
+  -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent;
+  animation: gradientShift 5s ease infinite, neonPulse 2s ease-in-out infinite;
 }
 .top__nav {
   display: flex;
   gap: 14px;
   align-items: center;
-}
-.top__nav a {
-  color: var(--text);
-  text-decoration: none;
-  opacity: 0.85;
-  padding: 6px 8px;
-  border-radius: 8px;
-}
-.top__nav a:hover {
-  opacity: 1;
-  background: var(--glass);
 }
 .top__toggle {
   display: none;
@@ -106,7 +151,25 @@ img {
   font-size: 1.2rem;
 }
 
-/* Hero */
+/* Nav Links */
+.top__nav a {
+  position: relative;
+  font-weight: 600;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: background-position 0.4s ease, text-shadow 0.4s ease;
+  animation: neonPulse 3.5s ease-in-out infinite;
+}
+.top__nav a:hover {
+  background-position: 100% center;
+}
+
+/* ======================
+   Hero
+====================== */
 .hero {
   padding: 36px 20px;
 }
@@ -119,8 +182,20 @@ img {
   align-items: center;
 }
 .hero__copy h1 {
-  margin: 0 0 10px;
-  font-size: 2.2rem;
+  font-size: 2.5rem;
+  font-weight: 900;
+  line-height: 1.2;
+  background: linear-gradient(
+    270deg,
+    var(--accent),
+    var(--accent-2),
+    var(--accent)
+  );
+  background-size: 600% 600%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 5s ease infinite, neonPulse 3.5s ease-in-out infinite;
 }
 .hero__copy p {
   color: var(--muted);
@@ -132,7 +207,9 @@ img {
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
 }
 
-/* Services band */
+/* ======================
+   Cards / Services
+====================== */
 .section--band {
   background: var(--band);
 }
@@ -146,6 +223,11 @@ img {
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 12px;
   overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
 .card img {
   aspect-ratio: 16/10;
@@ -159,7 +241,9 @@ img {
   color: var(--muted);
 }
 
-/* Gallery */
+/* ======================
+   Gallery
+====================== */
 .gallery {
   display: grid;
   gap: 10px;
@@ -169,9 +253,16 @@ img {
   aspect-ratio: 4/3;
   object-fit: cover;
   border-radius: 8px;
+  transition: transform 0.4s ease, box-shadow 0.3s ease;
+}
+.gallery img:hover {
+  transform: scale(1.05) rotate(1deg);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 }
 
-/* Quote band */
+/* ======================
+   Quote Band
+====================== */
 .quote {
   text-align: center;
   padding: 54px 20px;
@@ -186,7 +277,9 @@ img {
   color: var(--muted);
 }
 
-/* Feature / Insights */
+/* ======================
+   Feature / Insights
+====================== */
 .section--feature {
   padding-top: 0;
 }
@@ -211,7 +304,9 @@ img {
   margin: 0 0 12px;
 }
 
-/* Footer */
+/* ======================
+   Footer
+====================== */
 .footer {
   padding: 20px;
   text-align: center;
@@ -219,7 +314,9 @@ img {
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-/* Responsive */
+/* ======================
+   Responsive
+====================== */
 @media (max-width: 900px) {
   .hero__grid {
     grid-template-columns: 1fr;
@@ -250,9 +347,7 @@ img {
   .top__nav.open {
     display: flex;
   }
-  .cards {
-    grid-template-columns: 1fr;
-  }
+  .cards,
   .gallery {
     grid-template-columns: 1fr;
   }
