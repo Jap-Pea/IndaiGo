@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>IndaiGo Invaders</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body onload="startIntro()">
+    <!-- Flash screen effect -->
+    <section id="flash-screen"></section>
+
+    <!-- Fade transition layer -->
+    <section id="fade-layer"></section>
+
+    <!-- Startup sound -->
+    <audio id="logo-sound" src="assets/IndaiMon_Startup_SFX.mp3"></audio>
+
+    <!-- Logo screen -->
+    <header id="logo-screen">
+      <img src="assets/indaigo.png" id="logo" alt="IndaiGo Logo" />
+    </header>
+
+    <!-- Title screen -->
+    <main id="title-screen" style="display: none">
+      <h1 id="game-title">Invaders</h1>
+      <img src="assets/indaigo.png" id="title-logo" alt="Game Logo" />
+
+      <nav class="menu-buttons">
+        <button onclick="startGame()">▶ Start</button>
+        <button onclick="openOptions()">⚙ Options</button>
+        <button onclick="goHome()">🏠 Home</button>
+      </nav>
+    </main>
+
+    <!-- Player Name Input Screen -->
+    <section id="player-name-screen" style="display: none">
+      <h2>Enter Your Name</h2>
+      <input type="text" id="player-name" placeholder="Your name..." />
+      <button onclick="confirmName()">Confirm</button>
+    </section>
+
+    <!-- Scoreboard UI -->
+    <aside
+      id="scoreboard"
+      style="
+        display: none;
+        text-align: center;
+        color: white;
+        font-size: 1rem;
+        padding: 10px;
+      "
+    >
+      <p id="player-display">Player:</p>
+      <p id="score-display">Score: 0</p>
+      <p id="highscore-display">High Score: 0</p>
+      <p id="lives-display">Lives: 3</p>
+    </aside>
+
+    <!-- Game screen -->
+    <section id="game-screen" style="display: none"></section>
+
+    <script src="game.js"></script>
+  </body>
+</html>

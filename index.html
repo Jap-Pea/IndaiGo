@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IndaiGo</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="top">
+      <div class="top__brand">IndaiGo</div>
+      <nav class="top__nav" aria-label="Main">
+        <a href="#services">Services</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#insights">Insights</a>
+        <a class="btn btn--sm" href="#contact">Contact Us</a>
+      </nav>
+      <button
+        class="top__toggle"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+      >
+        ☰
+      </button>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero__grid">
+        <div class="hero__copy">
+          <h1>
+            Innovate. <br />Navigate. <br />Design. <br />Adapt. <br />Inspire.
+          </h1>
+          <p>
+            Welcome to <strong>IndaiGo</strong>, where creativity meets code.
+            I'm currently diving deep into the world of game development, UI/UX
+            design, and playful web builds. Wanna collab? Let's make something
+            unreal.
+          </p>
+          <a class="btn" href="#services">Get Started</a>
+        </div>
+        <div class="hero__image">
+          <img
+            src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1400&auto=format&fit=crop"
+            alt="Hands holding a game controller in front of a screen"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="section section--band">
+      <h2 class="section__title">
+        IndaiGo Software & Game Development Services
+      </h2>
+      <div class="cards">
+        <article class="card">
+          <img
+            src="https://images.unsplash.com/photo-1558021212-51b6ecfa0db9?q=80&w=800&auto=format&fit=crop"
+            alt=""
+          />
+          <h3>AR/VR & Game Experiences</h3>
+          <p>Build immersive, performant experiences with Unreal & Web tech.</p>
+        </article>
+        <article class="card">
+          <img
+            src="https://images.unsplash.com/photo-1557825835-70d97c4aa4d6?q=80&w=800&auto=format&fit=crop"
+            alt=""
+          />
+          <h3>Game UI/UX Design</h3>
+          <p>Diegetic HUDs, juicy feedback, and menus that don’t suck.</p>
+        </article>
+        <article class="card">
+          <img
+            src="https://images.unsplash.com/photo-1520975922131-cd175e9f0b65?q=80&w=800&auto=format&fit=crop"
+            alt=""
+          />
+          <h3>Game Testing & QA</h3>
+          <p>Playtest loops, bug triage, balance passes, and polish.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery" class="section">
+      <h2 class="section__title">Gallery</h2>
+      <div class="gallery">
+        <img
+          src="https://images.unsplash.com/photo-1615172800169-3155f3b3a2f3?q=80&w=800&auto=format&fit=crop"
+          alt=""
+        />
+        <img
+          src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=800&auto=format&fit=crop"
+          alt=""
+        />
+        <img
+          src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=800&auto=format&fit=crop"
+          alt=""
+        />
+        <img
+          src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=800&auto=format&fit=crop"
+          alt=""
+        />
+        <img
+          src="https://images.unsplash.com/photo-1511512578040-1f9f7a2846a2?q=80&w=800&auto=format&fit=crop"
+          alt=""
+        />
+        <img
+          src="https://images.unsplash.com/photo-1518432031352-d6fc5c10da5a?q=80&w=800&auto=format&fit=crop"
+          alt=""
+        />
+      </div>
+    </section>
+
+    <!-- Quote / CTA band -->
+    <section class="quote">
+      <p>Code worlds, create dreams, play beyond limits.</p>
+      <span>— IndaiGo studio tagline</span>
+    </section>
+
+    <!-- Insights -->
+    <section id="insights" class="section section--feature">
+      <img
+        class="feature__image"
+        src="https://images.unsplash.com/photo-1604881987929-3c95b6b51c91?q=80&w=1600&auto=format&fit=crop"
+        alt=""
+      />
+      <h2 class="section__title">Unreal Engine Game Dev Insights</h2>
+
+      <article class="insight">
+        <h3>Building believable spaces with lighting & fog</h3>
+        <p>
+          Notes from Dredge Protocol: lumen tweaks, post-process volumes, and
+          tension pacing.
+        </p>
+        <a class="btn" href="blog/the-beginning.html">Read: The Beginning</a>
+      </article>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>© 2025 IndaiGo. All rights reserved.</p>
+    </footer>
+
+    <script>
+      const toggle = document.querySelector('.top__toggle')
+      const nav = document.querySelector('.top__nav')
+      toggle.addEventListener('click', () => {
+        const open = toggle.getAttribute('aria-expanded') === 'true'
+        toggle.setAttribute('aria-expanded', String(!open))
+        nav.classList.toggle('open')
+      })
+    </script>
+  </body>
+</html>

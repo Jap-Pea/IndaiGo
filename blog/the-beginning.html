@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The Beginning • IndaiGo</title>
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <!-- Header (same as home) -->
+    <header class="top">
+      <div class="top__brand">
+        <a href="../index.html" style="text-decoration: none; color: inherit"
+          >IndaiGo</a
+        >
+      </div>
+      <nav class="top__nav" aria-label="Main">
+        <a href="../index.html#services">Services</a>
+        <a href="../index.html#gallery">Gallery</a>
+        <a href="../index.html#insights">Insights</a>
+        <a class="btn btn--sm" href="../index.html#contact">Contact Us</a>
+      </nav>
+      <button
+        class="top__toggle"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+      >
+        ☰
+      </button>
+    </header>
+
+    <!-- Breadcrumb / back link -->
+    <nav class="section" aria-label="Breadcrumb">
+      <a href="../index.html">← Back to Home</a>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero__grid">
+        <div class="hero__copy">
+          <h1>The Beginning</h1>
+          <p>Where it all began.</p>
+          <p>
+            As a kid, I was obsessed with <strong>Pokémon&reg;</strong> on the
+            <strong>Game Boy&reg;</strong>.
+          </p>
+          <p>
+            I also had the first-generation <strong>PlayStation&reg;</strong>,
+            and I always wondered why there wasn't a 3D version of Pokémon. That
+            thought stuck with me for years.
+          </p>
+          <p>Now, it's time to revisit that spark and actually build.</p>
+        </div>
+        <div class="hero__image">
+          <img
+            src="https://images.unsplash.com/photo-1520975922131-cd175e9f0b65?q=80&w=1400&auto=format&fit=crop"
+            alt="Retro gaming nostalgia"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Body -->
+    <main class="section">
+      <article class="insight" style="max-width: 900px; margin-inline: auto">
+        <h2>Why I'm doing this</h2>
+        <p>
+          I’m aiming to learn it all — <strong>HTML</strong>,
+          <strong>JavaScript</strong>, <strong>C++</strong>, and building
+          immersive experiences with <strong>Unreal Engine&reg;</strong>.
+        </p>
+
+        <h2>‘IndaiGo’—what’s the deal?</h2>
+        <p>
+          IndaiGo is my personal brand and umbrella for my projects. It’s small
+          now, but it’s growing.
+        </p>
+      </article>
+    </main>
+
+    <!-- Legal note -->
+    <section
+      class="section"
+      style="text-align: center; color: #a8abb2; font-size: 0.9rem"
+    >
+      <p>
+        Pokémon® and Game Boy® are registered trademarks of Nintendo. <br />
+        PlayStation® is a registered trademark of Sony Interactive
+        Entertainment. <br />
+        Unreal Engine® is a registered trademark of Epic Games, Inc. <br />
+        This blog is a fan work and is not affiliated with or endorsed by these
+        companies.
+      </p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>© 2025 IndaiGo</p>
+    </footer>
+
+    <script>
+      const toggle = document.querySelector('.top__toggle')
+      const nav = document.querySelector('.top__nav')
+      toggle.addEventListener('click', () => {
+        const open = toggle.getAttribute('aria-expanded') === 'true'
+        toggle.setAttribute('aria-expanded', String(!open))
+        nav.classList.toggle('open')
+      })
+    </script>
+  </body>
+</html>
