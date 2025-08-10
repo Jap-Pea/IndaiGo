@@ -3,109 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Mini Blaster</title>
-    <style>
-      :root {
-        color-scheme: dark;
-      }
-      body {
-        margin: 0;
-        background: #0b0f1a;
-        color: #e6e6e6;
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu,
-          Cantarell, 'Helvetica Neue', Arial, 'Noto Sans';
-        display: grid;
-        place-items: center;
-        min-height: 100svh;
-      }
-      .wrap {
-        display: grid;
-        gap: 0.75rem;
-        place-items: center;
-      }
-      canvas {
-        width: min(95vw, 700px);
-        height: min(80vh, 540px);
-        border: 2px solid #222a40;
-        border-radius: 14px;
-        background: radial-gradient(
-          1200px 600px at 50% -200px,
-          #141b2f 0,
-          #0b0f1a 50%,
-          #070a12 100%
-        );
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), inset 0 0 40px #0a0f1f;
-      }
-      .hud {
-        font-size: 14px;
-        opacity: 0.9;
-        display: flex;
-        gap: 0.75rem;
-        align-items: center;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .btn {
-        background: #1b9fff;
-        color: #08111f;
-        border: 0;
-        padding: 0.6rem 0.9rem;
-        border-radius: 10px;
-        cursor: pointer;
-        font-weight: 700;
-      }
-      .name {
-        background: #0e1526;
-        color: #e6e6e6;
-        border: 1px solid #243355;
-        border-radius: 10px;
-        padding: 0.55rem 0.7rem;
-        outline: none;
-        min-width: 220px;
-      }
-      .panel {
-        display: grid;
-        gap: 0.35rem;
-        place-items: center;
-      }
-      .scores {
-        margin-top: 0.25rem;
-        padding: 0.5rem 0.75rem;
-        background: #0e1526;
-        border: 1px solid #243355;
-        border-radius: 12px;
-        min-width: 260px;
-      }
-      .scores h4 {
-        margin: 0 0 0.4rem 0;
-        font-size: 14px;
-        opacity: 0.8;
-      }
-      .scores ol {
-        margin: 0;
-        padding-left: 1.2rem;
-      }
-    </style>
+    <title>IndaiGo Invaders</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
+  <body class="game-page">
     <div class="wrap">
-      <canvas
-        id="game"
-        width="700"
-        height="520"
-        aria-label="Mini Blaster"
-      ></canvas>
+      <canvas id="game" width="700" height="520" aria-label="Mini Blaster"></canvas>
 
       <div class="hud">
-        <span id="score">Score: 0</span> · <span id="lives">Lives: 3</span> ·
+        <span id="score">Score: 0</span> ·
+        <span id="lives">Lives: 3</span> ·
         <div class="panel">
-          <input
-            id="playerName"
-            class="name"
-            type="text"
-            maxlength="24"
-            placeholder="Enter your name"
-          />
+          <input id="playerName" class="name" type="text" maxlength="24" placeholder="Enter your name" />
         </div>
         <button id="start" class="btn">Start Game</button>
         <button id="restart" class="btn" hidden>Restart</button>
@@ -115,6 +24,13 @@
         <h4>🏆 High Scores (Top 5)</h4>
         <ol id="highscores"></ol>
       </div>
+    </div>
+
+    <!-- Mobile controls (visible on touch devices) -->
+    <div class="mobile-controls" aria-hidden="true">
+      <button id="btnLeft"  class="mc-btn">◀</button>
+      <button id="btnFire"  class="mc-btn mc-btn--fire">●</button>
+      <button id="btnRight" class="mc-btn">▶</button>
     </div>
 
     <script type="module" src="./game.js"></script>
