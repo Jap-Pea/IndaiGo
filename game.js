@@ -27,7 +27,7 @@ let lives = 3;
 const player = { x: W/2, y: H - 40, w: 40, h: 12, speed: 3.2, cooldown: 0 };
 
 // Highscores
-const HS_KEY = 'miniBlasterHighscores';
+const HS_KEY = 'IndaiGoInvadersHighscores';
 
 function escapeHtml(s){
   return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
@@ -210,7 +210,7 @@ function draw(){
     ctx.textAlign = 'center';
     if (mode === 'menu'){
       ctx.font = 'bold 30px system-ui, sans-serif';
-      ctx.fillText('Mini Blaster', W/2, H/2 - 20);
+      ctx.fillText('IndaiGo Invaders', W/2, H/2 - 20);
       ctx.font = '16px system-ui, sans-serif';
       ctx.fillText('Enter your name below and press Start Game', W/2, H/2 + 10);
     } else if (mode === 'gameover'){
