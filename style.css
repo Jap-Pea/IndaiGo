@@ -25,7 +25,36 @@ body {
   font-family: Inter, system-ui, Segoe UI, Roboto, Arial, sans-serif;
   background: var(--bg);
   line-height: 1.6;
+  /* Starting gradient */
+  background: linear-gradient(
+    -45deg,
+    #000000,
+    #000000,
+    #000000,
+    #000000,
+    #2e0000,
+    #000000,
+    #000000,
+    #000000,
+    #000000
+  );
+  background-size: 400% 500%;
+  animation: gradientShift 30s ease-in-out infinite;
 }
+
+/* Animation */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 img {
   max-width: 100%;
   display: block;
@@ -208,7 +237,16 @@ img {
 }
 .hero__image img {
   height: 350px;
-  width: 350px;
+  width: 400px;
+  object-fit: fill;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+}
+
+.hero__image-index img {
+  height: 350px;
+  width: 500px;
   object-fit: fill;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -278,7 +316,7 @@ img {
 .lightbox {
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  z-index: 10000;
   background: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
@@ -288,18 +326,19 @@ img {
   /* fade in/out */
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
   transition: opacity 0.25s ease, visibility 0.25s ease;
   padding: 24px;
 }
 .lightbox.open {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
 }
 
 /* Zoomed image */
 .lightbox-content {
-  width: 80%;
-  max-width: 1000px;
+  width: min(80vw, 1000px);
   max-height: 80vh;
   height: auto;
   border-radius: 12px;
