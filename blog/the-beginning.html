@@ -1,24 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-JSJR2GKXR5"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag('js', new Date())
+
+      gtag('config', 'G-JSJR2GKXR5')
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>The Beginning • IndaiGo</title>
     <link rel="stylesheet" href="../style.css" />
   </head>
   <body>
-    <!-- Header (same as home) -->
+    <!-- Header same as Home-->
     <header class="top">
       <div class="top__brand">
-        <a href="../index.html" style="text-decoration: none; color: inherit"
-          >IndaiGo</a
-        >
+        <a href="/">
+          <img
+            class="logo-img"
+            src="../assets/indaigo.png"
+            alt="IndaiGo Logo"
+          />
+        </a>
       </div>
       <nav class="top__nav" aria-label="Main">
-        <a href="../index.html#services">Services</a>
-        <a href="../index.html#gallery">Gallery</a>
-        <a href="../index.html#insights">Insights</a>
-        <a class="btn btn--sm" href="../index.html#contact">Contact Us</a>
+        <a href="../indaigo.html#services">Services</a>
+        <a href="../indaigo.html#gallery">Gallery</a>
+        <a href="../indaigo.html#insights">Insights</a>
+        <a class="btn btn--sm" href="../indaigo.html#contact">Contact Us</a>
       </nav>
       <button
         class="top__toggle"
@@ -31,7 +49,7 @@
 
     <!-- Breadcrumb / back link -->
     <nav class="section" aria-label="Breadcrumb">
-      <a class="btn" href="../index.html">← Back to Home</a>
+      <a class="btn" href="../indaigo.html">← Back to Home</a>
     </nav>
 
     <!-- Hero -->
@@ -39,20 +57,31 @@
       <div class="hero__grid">
         <div class="hero__copy">
           <h1>The Beginning</h1>
-          <p>Where it all began.</p>
+          <p>Where it all began...</p>
           <p>
             As a kid, I was obsessed with <strong>Pokémon&reg;</strong> on the
-            <strong>Game Boy&reg;</strong>.
+            <strong>Game Boy&reg;</strong>. Hours would disappear while I
+            trained my team and explored those pixelated worlds.
           </p>
           <p>
-            I also had the first-generation <strong>PlayStation&reg;</strong>,
-            and I always wondered why there wasn't a 3D version of Pokémon. That
-            thought stuck with me for years.
+            At the same time, I had a first-generation
+            <strong>PlayStation&reg;</strong>, and I couldn't stop wondering -
+            <em>why wasn't there a 3D version of Pokémon?</em> The idea of
+            running around in a fully 3D world with creatures battling and
+            interacting felt like magic waiting to happen.
           </p>
-          <p>Now, it's time to revisit that spark and actually build.</p>
+          <p>
+            That thought stuck with me for years - the "what if" of combining
+            those worlds.
+          </p>
+          <p>
+            Now, I've reached the point where I can actually build that spark
+            into reality. What started as childhood curiosity is becoming the
+            foundation of my journey into game development.
+          </p>
         </div>
         <div class="hero__image">
-          <img src="/assets/oldps1.png" alt="Retro gaming nostalgia" />
+          <img src="../assets/oldps1.png" alt="Retro gaming nostalgia" />
         </div>
       </div>
     </section>

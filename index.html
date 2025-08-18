@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-JSJR2GKXR5"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag('js', new Date())
+
+      gtag('config', 'G-JSJR2GKXR5')
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>IndaiGo</title>
@@ -9,7 +23,11 @@
   <body>
     <!-- Header -->
     <header class="top">
-      <div class="top__brand">IndaiGo</div>
+      <div class="top__brand">
+        <a href="/">
+          <img class="logo-img" src="assets/indaigo.png" alt="IndaiGo Logo" />
+        </a>
+      </div>
       <nav class="top__nav" aria-label="Main">
         <a href="#services">Services</a>
         <a href="#gallery">Gallery</a>
@@ -43,10 +61,7 @@
           <a class="btn" href="#services">Get Started</a>
         </div>
         <div class="hero__image">
-          <img
-            src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1400&auto=format&fit=crop"
-            alt="Hands holding a game controller in front of a screen"
-          />
+          <img src="assets/design-develop.png" alt="Design and Develop" />
         </div>
       </div>
     </section>
@@ -57,7 +72,7 @@
       <div class="cards">
         <article class="card">
           <a href="https://github.com/Jap-Pea" target="_blank" rel="noopener">
-            <img src="assets/github.jpeg" alt="GitHub logo" />
+            <img src="assets/github_logo.jpeg" alt="GitHub logo" />
           </a>
           <h3>My Github</h3>
           <p>Not much there at the moment, but will be adding as I learn.</p>
@@ -80,6 +95,8 @@
           <img src="assets/unreal-engine-5-logo.jpg" alt="Unreal Engine" />
           <h3>Unreal Engine Projects</h3>
           <p>Currently in the Making...</p>
+          <br />
+          <p>Screenshots in Gallery below from my Project.</p>
         </article>
       </div>
     </section>
@@ -87,16 +104,35 @@
     <!-- Gallery -->
     <h2 class="section__title">Gallery</h2>
     <section id="gallery" class="section gallery">
-      <img src="assets/indaigo-background.png" alt="IndaiGo" />
+      <img src="assets/IndaiGoCopy.png" alt="IndaiGo" />
       <img
         src="assets/ue5screenshots/ue5house.png"
-        alt="Unreal Engine Screenshot"
+        alt="Unreal Engine Screenshot House"
       />
-      <img src="assets/ue5screenshots/ue5moon.png" alt="" />
-      <img src="assets/ue5screenshots/ue5cave.png" alt="" />
-      <img src="assets/ue5screenshots/ue5shop.png" alt="" />
-      <img src="assets/ue5screenshots/ue5villa.png" alt="" />
+      <img
+        src="assets/ue5screenshots/ue5moon.png"
+        alt="Unreal Engine Screenshot Moon"
+      />
+      <img
+        src="assets/ue5screenshots/ue5cave.png"
+        alt="Unreal Engine Screenshot Cave"
+      />
+      <img
+        src="assets/ue5screenshots/ue5shop.png"
+        alt="Unreal Engine Screenshot Shop"
+      />
+      <img
+        src="assets/ue5screenshots/ue5villa.png"
+        alt="Unreal Engine Screenshot Villa"
+      />
     </section>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox" aria-hidden="true">
+      <button class="close" aria-label="Close (Esc)">X</button>
+      <img class="lightbox-content" id="lightbox-img" alt="" />
+      <div id="lightbox-caption" class="lightbox-caption"></div>
+    </div>
 
     <!-- Game card -->
     <section id="games" class="card section section--feature">
@@ -128,7 +164,7 @@
           Notes from my current project. I can understand why it takes soo long
           for games to come out.
         </p>
-        <a class="btn" href="blog/the-beginning.html">Read: The Beginning</a>
+        <a class="btn" href="blog/the-beginning.html">Read: My Beginning</a>
       </article>
     </section>
 

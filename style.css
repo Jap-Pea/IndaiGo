@@ -123,21 +123,26 @@ img {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 16px;
+
+  height: 64px;
+  padding: 0 16px;
   background: rgba(15, 16, 19, 0.85);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
+
 .top__brand {
-  font-size: 1.8rem;
-  font-weight: 900;
-  letter-spacing: 0.5px;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
-  background-size: 200% auto;
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
-  animation: gradientShift 5s ease infinite, neonPulse 2s ease-in-out infinite;
+  height: 48px;
+  display: flex;
+  align-items: center;
 }
+
+.logo-img {
+  margin-top: 15px;
+  height: 150px;
+  width: auto;
+  display: block;
+}
+
 .top__nav {
   display: flex;
   gap: 14px;
@@ -202,6 +207,9 @@ img {
   margin: 0 0 16px;
 }
 .hero__image img {
+  height: 350px;
+  width: 350px;
+  object-fit: fill;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
@@ -230,7 +238,7 @@ img {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
 .card img {
-  aspect-ratio: 16/10;
+  aspect-ratio: 20/10;
   object-fit: cover;
 }
 .card h3 {
@@ -262,8 +270,82 @@ img {
 }
 
 .gallery img:hover {
-  transform: scale(1.05) rotate(1deg);
+  transform: scale(1.05) rotate(2deg);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Lightbox overlay */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  /* fade in/out */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  padding: 24px;
+}
+.lightbox.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Zoomed image */
+.lightbox-content {
+  width: 80%;
+  max-width: 1000px;
+  max-height: 80vh;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 16px 60px rgba(0, 0, 0, 0.5);
+
+  transform: scale(0.92);
+  opacity: 0;
+  transition: transform 0.28s ease, opacity 0.28s ease;
+}
+.lightbox.open .lightbox-content {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* close button */
+.lightbox-caption {
+  color: #fff;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 0.95rem;
+}
+.close {
+  position: absolute;
+  top: 20px;
+  right: 50px;
+  color: #fff;
+  font-size: 2rem;
+  line-height: 1;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .lightbox,
+  .lightbox-content {
+    transition: none !important;
+  }
+}
+
+/* Optional: make enlarged image a bit smaller on phones */
+@media (max-width: 640px) {
+  .lightbox-content {
+    width: 90%;
+  }
 }
 
 /* ======================
@@ -297,8 +379,8 @@ img {
 .insight {
   max-width: 860px;
   margin: 18px auto 0;
-  background: #fff;
-  color: #111;
+  background: #660000;
+  color: #cfcfcf;
   border-radius: 12px;
   padding: 18px;
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
