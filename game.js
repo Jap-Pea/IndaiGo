@@ -1,261 +1,395 @@
-const c = document.getElementById('game');
-const ctx = c.getContext('2d');
-const scoreEl = document.getElementById('score');
-const livesEl = document.getElementById('lives');
-const restartBtn = document.getElementById('restart');
-const startBtn = document.getElementById('start');
-const nameInput = document.getElementById('playerName');
-const highscoresEl = document.getElementById('highscores');
+/**********************
+ * IndaiGo Invaders — Minimal HUD + Pause
+ * Toggles: F1 = HUD on/off, P = Pause
+ **********************/
 
-const W = c.width, H = c.height;
+// ===== Canvas & UI =====
+const canvas = document.getElementById('game')
+const ctx = canvas.getContext('2d')
+const scoreLabel = document.getElementById('score')
+const livesLabel = document.getElementById('lives')
+const restartBtn = document.getElementById('restart')
+const startBtn = document.getElementById('start')
+const nameInput = document.getElementById('playerName')
+const highscoresList = document.getElementById('highscores')
 
-// Modes: 'menu' | 'playing' | 'gameover'
-let mode = 'menu';
+const CANVAS_W = canvas.width
+const CANVAS_H = canvas.height
 
-// Game State
-let keys = new Set();
-let bullets = [];
-let enemies = [];
-let enemyDir = 1;
-let enemySpeed = 0.6;
-let enemyStepDown = 20;
-let enemyFireRate = 0.002;
-let enemyBullets = [];
-let score = 0;
-let lives = 3;
+// ===== Game Modes: 'menu' | 'playing' | 'gameover' =====
+let gameMode = 'menu'
 
-const player = { x: W/2, y: H - 40, w: 40, h: 12, speed: 3.2, cooldown: 0 };
+// ===== Input & Game State =====
+let pressedKeys = new Set()
 
-// Highscores
-const HS_KEY = 'IndaiGoInvadersHighscores';
+let playerBullets = []
+let enemyBullets = []
+let enemies = []
 
-function escapeHtml(s){
-  return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-}
-function getHighscores(){
-  try { return JSON.parse(localStorage.getItem(HS_KEY) || '[]'); }
-  catch { return []; }
-}
-function setHighscores(arr){
-  localStorage.setItem(HS_KEY, JSON.stringify(arr));
-  renderHighscores(arr);
-}
-function saveHighscore(name, sc){
-  const clean = (name || 'Player').trim() || 'Player';
-  let list = getHighscores();
-  list.push({ name: clean.slice(0,24), score: sc, at: Date.now() });
-  list.sort((a,b)=> b.score - a.score || a.at - b.at);
-  list = list.slice(0,5);
-  setHighscores(list);
-}
-function renderHighscores(arr = getHighscores()){
-  highscoresEl.innerHTML = arr.length
-    ? arr.map((e,i)=>`<li>${i+1}. ${escapeHtml(e.name)} — ${e.score}</li>`).join('')
-    : `<li>No scores yet — be the first!</li>`;
-}
-renderHighscores();
+let enemyDirection = 1 // 1 = right, -1 = left
+let enemySpeed = 0.6 // base horizontal speed (scaled by dt)
+let enemyStepDown = 20 // vertical drop when edges are hit
+let enemyFireRate = 0.002 // chance per enemy per frame to fire
 
-// Helpers
-function rect(x,y,w,h,col){ ctx.fillStyle = col; ctx.fillRect(x,y,w,h); }
-function collide(a,b){ return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y; }
-function reset(){
-  keys.clear(); bullets = []; enemyBullets = [];
-  score = 0; lives = 3;
-  enemyDir = 1; enemySpeed = 0.6; enemyFireRate = 0.002;
-  player.x = W/2; player.cooldown = 0;
-  spawnEnemies();
-  restartBtn.hidden = true;
-  updateHUD();
-}
-function updateHUD(){
-  scoreEl.textContent = `Score: ${score}`;
-  livesEl.textContent = `Lives: ${lives}`;
+let score = 0
+let lives = 3
+
+// Player
+const player = {
+  x: CANVAS_W / 2,
+  y: CANVAS_H - 40,
+  width: 40,
+  height: 12,
+  moveSpeed: 3.2, // pixels per 60fps-normalized frame
+  shootCooldown: 0, // frames (counts down)
 }
 
-// Enemies
-function spawnEnemies(){
-  enemies = [];
-  const cols = 10, rows = 4;
-  const gapX = 12, gapY = 16;
-  const ew = 42, eh = 18;
-  const startX = (W - (cols*ew + (cols-1)*gapX)) / 2;
-  const startY = 60;
-  for(let r=0;r<rows;r++){
-    for(let c=0;c<cols;c++){
-      enemies.push({ x: startX + c*(ew+gapX), y: startY + r*(eh+gapY), w: ew, h: eh, hp: 1 });
+// ===== Highscores =====
+const HIGHSCORES_KEY = 'IndaiGoInvadersHighscores'
+
+function escapeHtml(s) {
+  return s.replace(
+    /[&<>"']/g,
+    (m) =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[
+        m
+      ])
+  )
+}
+function getHighscores() {
+  try {
+    return JSON.parse(localStorage.getItem(HIGHSCORES_KEY) || '[]')
+  } catch {
+    return []
+  }
+}
+function setHighscores(arr) {
+  localStorage.setItem(HIGHSCORES_KEY, JSON.stringify(arr))
+  renderHighscores(arr)
+}
+function saveHighscore(name, sc) {
+  const clean = (name || 'Player').trim() || 'Player'
+  let list = getHighscores()
+  list.push({ name: clean.slice(0, 24), score: sc, at: Date.now() })
+  list.sort((a, b) => b.score - a.score || a.at - b.at)
+  list = list.slice(0, 5)
+  setHighscores(list)
+}
+function renderHighscores(arr = getHighscores()) {
+  highscoresList.innerHTML = arr.length
+    ? arr
+        .map((e, i) => `<li>${i + 1}. ${escapeHtml(e.name)} — ${e.score}</li>`)
+        .join('')
+    : `<li>No scores yet — be the first!</li>`
+}
+renderHighscores()
+
+// ===== Helpers =====
+function drawRect(x, y, w, h, col) {
+  ctx.fillStyle = col
+  ctx.fillRect(x, y, w, h)
+}
+
+// Axis-aligned rectangle collision (AABB)
+function aabbCollide(a, b) {
+  return (
+    a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y
+  )
+}
+
+function resetGame() {
+  pressedKeys.clear()
+  playerBullets = []
+  enemyBullets = []
+  score = 0
+  lives = 3
+
+  enemyDirection = 1
+  enemySpeed = 0.6
+  enemyFireRate = 0.002
+
+  player.x = CANVAS_W / 2
+  player.shootCooldown = 0
+
+  spawnEnemies()
+  restartBtn.hidden = true
+  updateHUD()
+}
+
+function updateHUD() {
+  scoreLabel.textContent = `Score: ${score}`
+  livesLabel.textContent = `Lives: ${lives}`
+}
+
+// ===== Enemies =====
+function spawnEnemies() {
+  enemies = []
+  const COLS = 10,
+    ROWS = 4
+  const GAP_X = 12,
+    GAP_Y = 16
+  const EN_W = 42,
+    EN_H = 18
+
+  const startX = (CANVAS_W - (COLS * EN_W + (COLS - 1) * GAP_X)) / 2
+  const startY = 60
+
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS; c++) {
+      enemies.push({
+        x: startX + c * (EN_W + GAP_X),
+        y: startY + r * (EN_H + GAP_Y),
+        w: EN_W,
+        h: EN_H,
+        hp: 1,
+      })
     }
   }
 }
 
-// Input
-addEventListener('keydown', e => {
-  if (['ArrowLeft','ArrowRight',' '].includes(e.key)) e.preventDefault();
-  keys.add(e.key);
-  if ((mode === 'gameover' || mode === 'menu') && e.key === 'Enter') startGame();
-});
-addEventListener('keyup', e => keys.delete(e.key));
+// ===== Input =====
+addEventListener('keydown', (e) => {
+  if (['ArrowLeft', 'ArrowRight', ' '].includes(e.key)) e.preventDefault()
+  pressedKeys.add(e.key)
+  if ((gameMode === 'gameover' || gameMode === 'menu') && e.key === 'Enter')
+    startGame()
+})
+addEventListener('keyup', (e) => pressedKeys.delete(e.key))
 
-startBtn.addEventListener('click', startGame);
-restartBtn.addEventListener('click', startGame);
+startBtn.addEventListener('click', startGame)
+restartBtn.addEventListener('click', startGame)
 
-function startGame(){
-  if (!nameInput.value.trim()) nameInput.value = 'Player';
-  mode = 'playing';
-  reset();
+function startGame() {
+  if (!nameInput.value.trim()) nameInput.value = 'Player'
+  gameMode = 'playing'
+  resetGame()
 }
 
-// Game Loop
-let last = 0;
-function loop(ts){
-  const dt = (ts - last) / (1000/60);
-  last = ts;
-  update(dt);
-  draw();
-  requestAnimationFrame(loop);
+// ===== Dev toggles (minimal) =====
+let DEBUG = true // F1 toggles HUD visibility
+let PAUSED = false // P toggles pause
+
+addEventListener('keydown', (e) => {
+  if (e.key === 'F1') {
+    e.preventDefault()
+    DEBUG = !DEBUG
+  }
+  if (e.key.toLowerCase() === 'p') {
+    PAUSED = !PAUSED
+  }
+})
+
+// Minimal HUD
+function drawDevHUD() {
+  if (!DEBUG) return
+  const L = (s, y) => {
+    ctx.fillStyle = '#cfe8ff'
+    ctx.font = '12px system-ui, sans-serif'
+    ctx.textAlign = 'left'
+    ctx.fillText(s, 8, y)
+  }
+  L(`Mode: ${gameMode}${PAUSED ? ' (Paused)' : ''}`, 14)
+  L(`Score: ${score}`, 28)
+  L(`Lives: ${lives}`, 42)
 }
-requestAnimationFrame(loop);
 
-// Update
-function update(dt){
-  if (mode !== 'playing') return;
+// ===== Game Loop (restored) =====
+let lastTs = 0
+function loop(ts) {
+  const dt = (ts - lastTs) / (1000 / 60) // 60fps-normalized delta
+  lastTs = ts
 
-  // player move
-  if (keys.has('ArrowLeft'))  player.x -= player.speed * dt;
-  if (keys.has('ArrowRight')) player.x += player.speed * dt;
-  player.x = Math.max(20, Math.min(W-20, player.x));
-  if (player.cooldown > 0) player.cooldown -= dt;
+  if (!PAUSED) update(dt)
+  draw()
 
-  // shoot
-  if (keys.has(' ') && player.cooldown <= 0){
-    bullets.push({ x: player.x-2, y: player.y-12, w: 4, h: 10, vy: -6 });
-    player.cooldown = 10; // frames
+  requestAnimationFrame(loop)
+}
+requestAnimationFrame(loop)
+
+// ===== Update =====
+function update(dt) {
+  if (gameMode !== 'playing') return
+
+  // Player movement
+  if (pressedKeys.has('ArrowLeft')) player.x -= player.moveSpeed * dt
+  if (pressedKeys.has('ArrowRight')) player.x += player.moveSpeed * dt
+  player.x = Math.max(20, Math.min(CANVAS_W - 20, player.x))
+
+  if (player.shootCooldown > 0) player.shootCooldown -= dt
+
+  // Shoot
+  if (pressedKeys.has(' ') && player.shootCooldown <= 0) {
+    playerBullets.push({
+      x: player.x - 2,
+      y: player.y - 12,
+      w: 4,
+      h: 10,
+      vy: -6,
+    })
+    player.shootCooldown = 10 // frames
   }
 
-  // bullets
-  bullets.forEach(b=> b.y += b.vy * dt);
-  bullets = bullets.filter(b => b.y + b.h > -5);
+  // Player bullets
+  playerBullets.forEach((b) => (b.y += b.vy * dt))
+  playerBullets = playerBullets.filter((b) => b.y + b.h > -5)
 
-  // enemies
-  let hitEdge = false;
-  enemies.forEach(e => {
-    e.x += enemyDir * enemySpeed * dt * 2.0;
-    if (e.x < 10 || e.x + e.w > W-10) hitEdge = true;
-    if (Math.random() < enemyFireRate){
-      enemyBullets.push({ x: e.x + e.w/2 - 2, y: e.y + e.h, w: 4, h: 10, vy: 3 });
+  // Enemies
+  let hitEdge = false
+  enemies.forEach((e) => {
+    e.x += enemyDirection * enemySpeed * dt * 2.0
+    if (e.x < 10 || e.x + e.w > CANVAS_W - 10) hitEdge = true
+
+    // Random enemy fire
+    if (Math.random() < enemyFireRate) {
+      enemyBullets.push({
+        x: e.x + e.w / 2 - 2,
+        y: e.y + e.h,
+        w: 4,
+        h: 10,
+        vy: 3,
+      })
     }
-  });
-  if (hitEdge){
-    enemyDir *= -1;
-    enemies.forEach(e => e.y += enemyStepDown);
+  })
+
+  if (hitEdge) {
+    enemyDirection *= -1
+    enemies.forEach((e) => (e.y += enemyStepDown))
   }
 
-  // enemy bullets
-  enemyBullets.forEach(b=> b.y += b.vy * dt);
-  enemyBullets = enemyBullets.filter(b => b.y < H + 20);
+  // Enemy bullets
+  enemyBullets.forEach((b) => (b.y += b.vy * dt))
+  enemyBullets = enemyBullets.filter((b) => b.y < CANVAS_H + 20)
 
-  // collisions: player bullets vs enemies
-  for (let i=bullets.length-1; i>=0; i--){
-    for (let j=enemies.length-1; j>=0; j--){
-      if (collide(bullets[i], enemies[j])){
-        enemies.splice(j,1);
-        bullets.splice(i,1);
-        score += 10;
-        updateHUD();
-        break;
+  // Collisions: player bullets vs enemies
+  for (let i = playerBullets.length - 1; i >= 0; i--) {
+    for (let j = enemies.length - 1; j >= 0; j--) {
+      if (aabbCollide(playerBullets[i], enemies[j])) {
+        enemies.splice(j, 1)
+        playerBullets.splice(i, 1)
+        score += 10
+        updateHUD()
+        break
       }
     }
   }
 
-  // collisions: enemy bullets vs player
-  for (let i=enemyBullets.length-1; i>=0; i--){
-    if (collide(enemyBullets[i], {x:player.x-18, y:player.y-6, w:36, h:16})){
-      enemyBullets.splice(i,1);
-      lives -= 1;
-      updateHUD();
-      if (lives <= 0) endGame();
+  // Collisions: enemy bullets vs player
+  const playerHitbox = { x: player.x - 18, y: player.y - 6, w: 36, h: 16 }
+  for (let i = enemyBullets.length - 1; i >= 0; i--) {
+    if (aabbCollide(enemyBullets[i], playerHitbox)) {
+      enemyBullets.splice(i, 1)
+      lives -= 1
+      updateHUD()
+      if (lives <= 0) {
+        endGame()
+        return
+      }
     }
   }
 
-  // lose if enemies reach player line
-  if (enemies.some(e => e.y + e.h >= player.y - 4)) endGame();
+  // Lose if enemies reach player line
+  if (enemies.some((e) => e.y + e.h >= player.y - 4)) {
+    endGame()
+    return
+  }
 
-  // next wave
-  if (enemies.length === 0){
-    enemySpeed += 0.25;
-    enemyFireRate += 0.0005;
-    spawnEnemies();
+  // Next wave
+  if (enemies.length === 0) {
+    enemySpeed += 0.25
+    enemyFireRate += 0.0005
+    spawnEnemies()
   }
 }
 
-function endGame(){
-  mode = 'gameover';
-  saveHighscore(nameInput.value, score);
-  renderHighscores();
-  restartBtn.hidden = false;
+// ===== End Game =====
+function endGame() {
+  gameMode = 'gameover'
+  saveHighscore(nameInput.value, score)
+  renderHighscores()
+  restartBtn.hidden = false
 }
 
-// Draw
-function draw(){
-  ctx.clearRect(0,0,W,H);
+// ===== Draw =====
+function draw() {
+  ctx.clearRect(0, 0, CANVAS_W, CANVAS_H)
 
-  // stars
-  for (let i=0;i<120;i++){
-    const x = (i*53 % W), y = (i*97 % H);
-    ctx.fillStyle = i%9 ? '#0f2642' : '#134b8a';
-    ctx.fillRect(x, y, 2, 2);
+  // Starfield
+  for (let i = 0; i < 120; i++) {
+    const x = (i * 53) % CANVAS_W,
+      y = (i * 97) % CANVAS_H
+    ctx.fillStyle = i % 9 ? '#0f2642' : '#134b8a'
+    ctx.fillRect(x, y, 2, 2)
   }
 
-  if (mode !== 'playing'){
-    ctx.fillStyle = '#ffffff';
-    ctx.textAlign = 'center';
-    if (mode === 'menu'){
-      ctx.font = 'bold 30px system-ui, sans-serif';
-      ctx.fillText('IndaiGo Invaders', W/2, H/2 - 20);
-      ctx.font = '16px system-ui, sans-serif';
-      ctx.fillText('Enter your name below and press Start Game', W/2, H/2 + 10);
-    } else if (mode === 'gameover'){
-      ctx.font = 'bold 28px system-ui, sans-serif';
-      ctx.fillText('Game Over', W/2, H/2 - 12);
-      ctx.font = '16px system-ui, sans-serif';
-      ctx.fillText('Press Restart or Enter to play again', W/2, H/2 + 16);
-      ctx.fillText(`Final Score: ${score}`, W/2, H/2 + 40);
+  // Menu / Gameover overlays
+  if (gameMode !== 'playing') {
+    ctx.fillStyle = '#ffffff'
+    ctx.textAlign = 'center'
+    if (gameMode === 'menu') {
+      ctx.font = 'bold 30px system-ui, sans-serif'
+      ctx.fillText('IndaiGo Invaders', CANVAS_W / 2, CANVAS_H / 2 - 20)
+      ctx.font = '16px system-ui, sans-serif'
+      ctx.fillText(
+        'Enter your name below and press Start Game',
+        CANVAS_W / 2,
+        CANVAS_H / 2 + 10
+      )
+    } else if (gameMode === 'gameover') {
+      ctx.font = 'bold 28px system-ui, sans-serif'
+      ctx.fillText('Game Over', CANVAS_W / 2, CANVAS_H / 2 - 12)
+      ctx.font = '16px system-ui, sans-serif'
+      ctx.fillText(
+        'Press Restart or Enter to play again',
+        CANVAS_W / 2,
+        CANVAS_H / 2 + 16
+      )
+      ctx.fillText(`Final Score: ${score}`, CANVAS_W / 2, CANVAS_H / 2 + 40)
     }
-    return;
+    drawDevHUD() // show HUD even in menu/paused
+    return
   }
 
-  // player
-  ctx.save();
-  ctx.translate(player.x, player.y);
-  rect(-18,-6,36,12,'#7ce2ff');
-  rect(-12,-10,24,6,'#b6f1ff');
-  rect(-3,-14,6,6,'#eaffff');
-  ctx.restore();
+  // Player
+  ctx.save()
+  ctx.translate(player.x, player.y)
+  drawRect(-18, -6, 36, 12, '#7ce2ff')
+  drawRect(-12, -10, 24, 6, '#b6f1ff')
+  drawRect(-3, -14, 6, 6, '#eaffff')
+  ctx.restore()
 
-  // bullets
-  bullets.forEach(b => rect(b.x,b.y,b.w,b.h,'#ffde59'));
-  enemyBullets.forEach(b => rect(b.x,b.y,b.w,b.h,'#ff6b6b'));
+  // Bullets
+  playerBullets.forEach((b) => drawRect(b.x, b.y, b.w, b.h, '#ffde59'))
+  enemyBullets.forEach((b) => drawRect(b.x, b.y, b.w, b.h, '#ff6b6b'))
 
-  // enemies
-  enemies.forEach(e=>{
-    rect(e.x,e.y,e.w,e.h,'#7cffb2');
-    rect(e.x+10,e.y-6,e.w-20,6,'#a6ffd1');
-  });
+  // Enemies
+  enemies.forEach((e) => {
+    drawRect(e.x, e.y, e.w, e.h, '#7cffb2')
+    drawRect(e.x + 10, e.y - 6, e.w - 20, 6, '#a6ffd1')
+  })
+
+  drawDevHUD()
 }
 
-// ----- Mobile controls -> map to keys -----
-const btnLeft  = document.getElementById('btnLeft');
-const btnRight = document.getElementById('btnRight');
-const btnFire  = document.getElementById('btnFire');
+// ===== Mobile controls → map to keys =====
+const btnLeft = document.getElementById('btnLeft')
+const btnRight = document.getElementById('btnRight')
+const btnFire = document.getElementById('btnFire')
 
-function bindHold(btn, key){
-  if (!btn) return;
-  const down = e => { e.preventDefault(); keys.add(key); };
-  const up   = e => { e.preventDefault(); keys.delete(key); };
-  btn.addEventListener('pointerdown', down);
-  btn.addEventListener('pointerup', up);
-  btn.addEventListener('pointercancel', up);
-  btn.addEventListener('pointerleave', up);
+function bindHold(btn, key) {
+  if (!btn) return
+  const down = (e) => {
+    e.preventDefault()
+    pressedKeys.add(key)
+  }
+  const up = (e) => {
+    e.preventDefault()
+    pressedKeys.delete(key)
+  }
+  btn.addEventListener('pointerdown', down)
+  btn.addEventListener('pointerup', up)
+  btn.addEventListener('pointercancel', up)
+  btn.addEventListener('pointerleave', up)
 }
-bindHold(btnLeft, 'ArrowLeft');
-bindHold(btnRight, 'ArrowRight');
-bindHold(btnFire, ' '); // space = shoot
+bindHold(btnLeft, 'ArrowLeft')
+bindHold(btnRight, 'ArrowRight')
+bindHold(btnFire, ' ') // space = shoot
