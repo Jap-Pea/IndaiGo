@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JSJR2GKXR5"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-JSJR2GKXR5');
+    </script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IndaiGo | Web Games</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Header (same as your site) -->
+    <header class="top">
+      <div class="top__brand">
+        <a href="./">
+          <img class="logo-img" src="assets/indaigo.png" alt="IndaiGo Logo" />
+        </a>
+      </div>
+      <nav class="top__nav" aria-label="Main">
+        <a href="#services">Services</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#insights">Insights</a>
+        <a class="btn btn--sm" href="#contact">Contact</a>
+      </nav>
+      <button class="top__toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    </header>
+
+    <main class="games">
+      <!-- Hero -->
+      <section class="wrap games-hero">
+        <div>
+          <span class="games-kicker">Small browser games · Made by me</span>
+          <h1>Web Games</h1>
+          <p>Quick, fun projects you can play right in the browser. More coming soon.</p>
+          <div class="games-cta">
+            <a class="games-btn" href="#games-list">See Games</a>
+          </div>
+        </div>
+        <div class="games-card">
+          <h4>What’s here</h4>
+          <ul class="games-list">
+            <li>IndaiGo Invaders — HTML5 canvas shooter</li>
+            <li>More WIPs incoming (tic-tac-toe, mini-puzzles, etc.)</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Games Grid -->
+      <section id="games-list" class="wrap games-section">
+        <h2>Play Now</h2>
+        <div class="games-grid">
+
+          <!-- Game 1: IndaiGo Invaders -->
+          <article class="games-card games-item">
+            <div class="games-thumb">
+              <img src="assets/IndaiGoCopy.png" alt="IndaiGo Invaders cover" />
+              <span class="games-badge">Arcade</span>
+            </div>
+            <div class="games-body">
+              <h3>IndaiGo Invaders</h3>
+              <p>Fast-paced canvas shooter. Dodge, blast, and level up.</p>
+              <ul class="games-mini">
+                <li>Tech: HTML5 Canvas, JS</li>
+                <li>Input: Keyboard / Touch</li>
+              </ul>
+              <div class="games-actions">
+                <a class="games-btn" href="game.html" target="_blank" rel="noopener">Open in New Tab</a>
+                <button class="games-btn ghost" data-embed="game.html">Play Inline</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Placeholder for your next games -->
+          <article class="games-card games-item">
+            <div class="games-thumb">
+              <img src="assets/placeholders/coming-soon-1.jpg" alt="Coming soon placeholder" />
+              <span class="games-badge">WIP</span>
+            </div>
+            <div class="games-body">
+              <h3>Next Mini-Game</h3>
+              <p>Adding soon. Probably a puzzle or tiny platformer.</p>
+              <ul class="games-mini">
+                <li>Tech: HTML/CSS/JS</li>
+                <li>Status: Prototype</li>
+              </ul>
+              <div class="games-actions">
+                <button class="games-btn ghost" disabled>Play Inline</button>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+    </main>
+
+    <!-- Modal Player -->
+    <div class="games-modal" id="gamesModal" aria-hidden="true" role="dialog" aria-label="Embedded game player">
+      <div class="games-frame">
+        <button class="games-close" id="gamesClose" aria-label="Close">✕</button>
+        <iframe id="gamesIframe" title="Embedded game" loading="lazy" referrerpolicy="no-referrer"></iframe>
+      </div>
+    </div>
+
+    <footer id="contact" class="footer">
+      <p>Got feedback or a game idea? <a href="mailto:you@example.com">Email me</a>.</p>
+      <p>© 2025 IndaiGo. All rights reserved.</p>
+    </footer>
+
+    <script src="main.js"></script>
+  </body>
+</html>
