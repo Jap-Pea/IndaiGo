@@ -1,5 +1,12 @@
+/* =========================================================
+   IND AIGO — GLOBAL STYLES
+   Shared tokens, base, header, hero, cards, gallery,
+   quotes, feature, footer, plus Game Dev + Web Games pages.
+   (Game canvas / Invaders-specific styles moved to invaders.css)
+   ========================================================= */
+
 /* ======================
-   Design Tokens
+   1) Design Tokens
 ====================== */
 :root {
   --bg: #0f1013;
@@ -11,7 +18,7 @@
   --accent-2: #ff3b81;
   --glass: rgba(255, 255, 255, 0.06);
 
-  /* Game Dev page */
+  /* Game Dev page (shared look for /game-dev/) */
   --gd-text: #e6ecff;
   --gd-muted: #a8b3cf;
   --gd-panel: #141922;
@@ -22,7 +29,7 @@
   --gd-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
   --gd-radius: 16px;
 
-  /* Web Games page */
+  /* Web Games page (shared look for /web-games/) */
   --games-text: #e6ecff;
   --games-muted: #a8b3cf;
   --games-panel: #141922;
@@ -33,7 +40,7 @@
 }
 
 /* ======================
-   Base
+   2) Base / Reset
 ====================== */
 * {
   box-sizing: border-box;
@@ -43,6 +50,9 @@ body {
   height: 100%;
 }
 
+html {
+  scroll-behavior: smooth;
+} /* nicer anchor scroll */
 body {
   margin: 0;
   color: var(--text);
@@ -71,15 +81,19 @@ img {
   display: block;
 }
 
+/* Anchor offset so headers aren’t hidden by sticky nav */
+section {
+  scroll-margin-top: 90px;
+}
+
 /* ======================
-   Utilities
+   3) Utilities
 ====================== */
 .section {
   max-width: 1100px;
   margin: 0 auto;
   padding: 48px 20px;
 }
-
 .section__title {
   margin: 0 0 22px;
   text-align: center;
@@ -87,7 +101,9 @@ img {
   letter-spacing: 0.2px;
 }
 
-/* Buttons */
+/* ======================
+   4) Buttons
+====================== */
 .btn {
   display: inline-block;
   padding: 12px 18px;
@@ -95,7 +111,7 @@ img {
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
   background-size: 200% auto;
   color: #000;
-  font-weight: 700;
+  font-weight: 800;
   text-decoration: none;
   transition: background 0.4s ease, color 0.4s ease, transform 0.3s ease;
 }
@@ -126,7 +142,7 @@ img {
 }
 
 /* ======================
-   Animations
+   5) Animations
 ====================== */
 @keyframes gradientShift {
   0% {
@@ -152,7 +168,7 @@ img {
 }
 
 /* ======================
-   Header
+   6) Header / Nav
 ====================== */
 .top {
   position: sticky;
@@ -166,6 +182,7 @@ img {
   background: rgba(15, 16, 19, 0.85);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
+
 .top__brand {
   height: 48px;
   display: flex;
@@ -192,7 +209,7 @@ img {
   font-size: 1.2rem;
 }
 
-/* nav links */
+/* Nav links (animated gradient text on desktop bar) */
 .top__nav a {
   position: relative;
   font-weight: 600;
@@ -209,7 +226,7 @@ img {
 }
 
 /* ======================
-   Hero
+   7) Hero
 ====================== */
 .hero {
   padding: 36px 20px;
@@ -261,7 +278,7 @@ img {
 }
 
 /* ======================
-   Cards / Services
+   8) Cards / Services
 ====================== */
 .section--band {
   background: var(--band);
@@ -286,6 +303,7 @@ img {
 .card img {
   aspect-ratio: 20/10;
   object-fit: cover;
+  width: 100%;
 }
 .card h3 {
   margin: 12px 12px 6px;
@@ -296,7 +314,7 @@ img {
 }
 
 /* ======================
-   Gallery + Lightbox
+   9) Gallery + Lightbox
 ====================== */
 .gallery {
   display: grid;
@@ -317,7 +335,7 @@ img {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 }
 
-/* Lightbox */
+/* Lightbox overlay */
 .lightbox {
   position: fixed;
   inset: 0;
@@ -338,7 +356,6 @@ img {
   visibility: visible;
   pointer-events: auto;
 }
-
 .lightbox-content {
   width: min(80vw, 1000px);
   max-height: 80vh;
@@ -353,7 +370,6 @@ img {
   transform: scale(1);
   opacity: 1;
 }
-
 .lightbox-caption {
   color: #fff;
   margin-top: 10px;
@@ -386,7 +402,7 @@ img {
 }
 
 /* ======================
-   Quote + Feature
+   10) Quote + Feature
 ====================== */
 .quote {
   text-align: center;
@@ -427,7 +443,7 @@ img {
 }
 
 /* ======================
-   Footer
+   11) Footer
 ====================== */
 .footer {
   padding: 20px;
@@ -437,7 +453,7 @@ img {
 }
 
 /* ======================
-   Responsive
+   12) Responsive (global)
 ====================== */
 @media (max-width: 900px) {
   .hero__grid {
@@ -475,109 +491,12 @@ img {
   }
 }
 
-/* ======================
-   Game Page (scoped)
-====================== */
-.game-page {
-  color: #e6e6e6;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell,
-    'Helvetica Neue', Arial, 'Noto Sans';
-  min-height: 100svh;
-  display: grid;
-  align-items: center;
-}
-.game-page .wrap {
-  display: grid;
-  gap: 0.75rem;
-  align-items: center;
-}
-
-.game-page canvas {
-  width: min(95vw, 700px);
-  height: min(80vh, 540px);
-  border: 2px solid #222a40;
-  border-radius: 14px;
-  background: radial-gradient(
-    1200px 600px at 50% -200px,
-    #141b2f 0,
-    #0b0f1a 50%,
-    #070a12 100%
-  );
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), inset 0 0 40px #0a0f1f;
-}
-.game-page .hud {
-  font-size: 14px;
-  opacity: 0.9;
-  display: flex;
-  gap: 0.75rem;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.game-page .name {
-  color: #e6e6e6;
-  border: 1px solid #243355;
-  border-radius: 10px;
-  padding: 0.55rem 0.7rem;
-  outline: none;
-  min-width: 220px;
-}
-.game-page .panel {
-  display: grid;
-  gap: 0.35rem;
-  align-items: center;
-}
-.game-page .scores {
-  margin-top: 0.25rem;
-  padding: 0.5rem 0.75rem;
-  background: #0e1526;
-  border: 1px solid #243355;
-  border-radius: 12px;
-  min-width: 260px;
-}
-.game-page .scores h4 {
-  margin: 0 0 0.4rem 0;
-  font-size: 14px;
-  opacity: 0.8;
-}
-.game-page .scores ol {
-  margin: 0;
-  padding-left: 1.2rem;
-}
-
-/* mobile controls */
-.game-page .mobile-controls {
-  position: fixed;
-  inset: auto 0 16px 0;
-  display: none;
-  gap: 14px;
-  justify-content: center;
-  align-items: center;
-}
-.game-page .mc-btn {
-  font: 700 22px system-ui, sans-serif;
-  width: 68px;
-  height: 68px;
-  border-radius: 16px;
-  border: 1px solid #243355;
-  background: #0e1526;
-  color: #e6e6e6;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
-  touch-action: none; /* prevents scrolling while holding */
-}
-.game-page .mc-btn--fire {
-  width: 84px;
-  height: 84px;
-  border: 2px solid #1b9fff;
-}
-@media (pointer: coarse) {
-  .game-page .mobile-controls {
-    display: flex;
-  }
-}
+/* =========================================================
+   PAGE-SPECIFIC (kept in global because multiple pages use)
+   ========================================================= */
 
 /* ======================
-   Game Dev page (scoped)
+   A) Game Dev page (/game-dev/)
 ====================== */
 .gamedev {
   color: var(--gd-text);
@@ -735,7 +654,7 @@ img {
   color: var(--gd-muted);
 }
 
-/* lightbox */
+/* Lightbox (game dev page) */
 .gd-lightbox {
   position: fixed;
   inset: 0;
@@ -764,7 +683,7 @@ img {
   right: 18px;
 }
 
-/* responsive */
+/* Responsive (game dev page) */
 @media (max-width: 880px) {
   .gd-hero {
     grid-template-columns: 1fr;
@@ -775,7 +694,7 @@ img {
 }
 
 /* ======================
-   Web Games page (scoped)
+   B) Web Games page (/web-games/)
 ====================== */
 .games {
   color: var(--games-text);
@@ -809,6 +728,7 @@ img {
 .games-cta {
   margin-top: 12px;
 }
+
 .games-btn {
   display: inline-flex;
   align-items: center;
@@ -901,7 +821,7 @@ img {
   flex-wrap: wrap;
 }
 
-/* modal player */
+/* Modal player */
 .games-modal {
   position: fixed;
   inset: 0;
@@ -944,7 +864,7 @@ img {
   background: #000;
 }
 
-/* responsive */
+/* Responsive (web games) */
 @media (max-width: 880px) {
   .games-hero {
     grid-template-columns: 1fr;

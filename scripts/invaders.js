@@ -1,5 +1,5 @@
 /**********************
- * IndaiGo Invaders — Minimal HUD + Pause
+ * IndaiGo Invaders
  * Toggles: F1 = HUD on/off, P = Pause
  **********************/
 
@@ -16,7 +16,7 @@ const highscoresList = document.getElementById('highscores')
 const CANVAS_W = canvas.width
 const CANVAS_H = canvas.height
 
-// ===== Game Modes: 'menu' | 'playing' | 'gameover' =====
+// ===== Game Modes: 'Menu' | 'Playing' | 'GameOver' =====
 let gameMode = 'menu'
 
 // ===== Input & Game State =====
@@ -28,7 +28,7 @@ let enemies = []
 
 let enemyDirection = 1 // 1 = right, -1 = left
 let enemySpeed = 0.6 // base horizontal speed (scaled by dt)
-let enemyStepDown = 20 // vertical drop when edges are hit
+let enemyStepDown = 15 // vertical drop when edges are hit
 let enemyFireRate = 0.002 // chance per enemy per frame to fire
 
 let score = 0
@@ -38,9 +38,9 @@ let lives = 3
 const player = {
   x: CANVAS_W / 2,
   y: CANVAS_H - 40,
-  width: 40,
-  height: 12,
-  moveSpeed: 3.2, // pixels per 60fps-normalized frame
+  width: 30,
+  height: 10,
+  moveSpeed: 4, // pixels per 60fps-normalized frame
   shootCooldown: 0, // frames (counts down)
 }
 
@@ -80,8 +80,23 @@ function renderHighscores(arr = getHighscores()) {
     ? arr
         .map((e, i) => `<li>${i + 1}. ${escapeHtml(e.name)} — ${e.score}</li>`)
         .join('')
-    : `<li>No scores yet — be the first!</li>`
+    : `<li>No scores yet — Probably wont be saved!</li>`
 }
+
+function renderHighScores(list) {
+  const ol = document.getElementById('highscores')
+  ol.innerHTML = list
+    .map((s, i) => `<li>${i + 1}. ${s.name} — ${s.score}</li>`)
+    .join('')
+  const panel = ol.closest('.scores')
+  if (panel) {
+    panel.classList.remove('scores--pulse')
+    // Force reflow so animation retriggers
+    void panel.offsetWidth
+    panel.classList.add('scores--pulse')
+  }
+}
+
 renderHighscores()
 
 // ===== Helpers =====
