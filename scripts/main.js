@@ -52,119 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.target === lightbox) closeLightbox()
     })
     window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && lightbox.classList.contains('open'))
-        closeLightbox()
+      if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox()
     })
-  })()
-
-  /* ========= UI/UX page (ui-ux.html) ========= */
-  ;(function runUiUx() {
-    const root = document.querySelector('.uiux')
-    if (!root) return
-
-    // Filters
-    const chips = root.querySelectorAll('.uiux__chip')
-    const cards = root.querySelectorAll('.uiux__card')
-    chips.forEach((ch) => {
-      ch.addEventListener('click', () => {
-        chips.forEach((c) => c.classList.remove('uiux__chip--active'))
-        ch.classList.add('uiux__chip--active')
-        const f = ch.dataset.filter
-        cards.forEach((card) => {
-          const tags = card.dataset.tags || ''
-          card.style.display = f === 'all' || tags.includes(f) ? '' : 'none'
-        })
-      })
-    })
-
-    // Lightbox (ui/ux)
-    const lb = document.getElementById('lightbox') // ui/ux lightbox container
-    const lbImg = document.getElementById('lightboxImg') // <img id="lightboxImg">
-    const lbCaption = document.getElementById('lightboxCaption') // optional
-    const closeBtn = document.getElementById('closeLightbox')
-
-    if (lb && lbImg) {
-      root.querySelectorAll('.uiux__view').forEach((a) => {
-        a.addEventListener('click', (e) => {
-          e.preventDefault()
-          const full = a.dataset.full || a.getAttribute('href')
-          if (!full) return
-          lbImg.src = full
-          if (lbCaption)
-            lbCaption.textContent =
-              a.dataset.caption || a.getAttribute('aria-label') || ''
-          lb.classList.add('uiux__lightbox--open')
-          lb.setAttribute('aria-hidden', 'false')
-        })
-      })
-
-      function closeLB() {
-        lb.classList.remove('uiux__lightbox--open')
-        lb.setAttribute('aria-hidden', 'true')
-        lbImg.removeAttribute('src')
-      }
-      if (closeBtn) closeBtn.addEventListener('click', closeLB)
-      lb.addEventListener('click', (e) => {
-        if (e.target === lb) closeLB()
-      })
-      window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeLB()
-      })
-    }
-
-    // Before/After slider
-    function makeBA(id) {
-      const rootEl = document.getElementById(id)
-      if (!rootEl) return
-      const after = rootEl.querySelector('.uiux__ba-after')
-      const handle = rootEl.querySelector('.uiux__ba-handle')
-      const knob = rootEl.querySelector('.uiux__ba-knob')
-      let pct = 50,
-        dragging = false
-
-      function setFromX(x) {
-        const rect = rootEl.getBoundingClientRect()
-        pct = Math.max(0, Math.min(100, ((x - rect.left) / rect.width) * 100))
-        after.style.clipPath = `inset(0 0 0 ${pct}%)`
-        handle.style.left = knob.style.left = pct + '%'
-      }
-
-      const onMove = (e) => {
-        if (!dragging) return
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX
-        setFromX(clientX)
-      }
-
-      rootEl.addEventListener('mousedown', (e) => {
-        dragging = true
-        setFromX(e.clientX)
-      })
-      rootEl.addEventListener(
-        'touchstart',
-        (e) => {
-          dragging = true
-          setFromX(e.touches[0].clientX)
-        },
-        { passive: true }
-      )
-      window.addEventListener('mousemove', onMove)
-      window.addEventListener('touchmove', onMove, { passive: true })
-      window.addEventListener('mouseup', () => (dragging = false))
-      window.addEventListener('touchend', () => (dragging = false))
-      window.addEventListener('touchcancel', () => (dragging = false))
-
-      knob.addEventListener('keydown', (e) => {
-        const rect = rootEl.getBoundingClientRect()
-        if (e.key === 'ArrowLeft')
-          setFromX(rect.left + ((pct - 2) / 100) * rect.width)
-        if (e.key === 'ArrowRight')
-          setFromX(rect.left + ((pct + 2) / 100) * rect.width)
-      })
-
-      const rect = rootEl.getBoundingClientRect()
-      setFromX(rect.left + rect.width / 2)
-    }
-    makeBA('ba1')
   })()
 
   /* ========= Game Dev page (game-dev.html) ========= */
@@ -191,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.classList.add('no-scroll')
       lastFocus = document.activeElement
       closeBtn && closeBtn.focus({ preventScroll: true })
+
       // preload neighbors
       const nextIdx = (i + 1) % shots.length
       const prevIdx = (i - 1 + shots.length) % shots.length
@@ -210,14 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
       index = -1
     }
 
-    function next() {
-      if (index < 0) return
-      openLB((index + 1) % shots.length)
-    }
-    function prev() {
-      if (index < 0) return
-      openLB((index - 1 + shots.length) % shots.length)
-    }
+    function next() { if (index >= 0) openLB((index + 1) % shots.length) }
+    function prev() { if (index >= 0) openLB((index - 1 + shots.length) % shots.length) }
 
     shots.forEach((img, i) => {
       img.addEventListener('click', () => openLB(i))
@@ -226,9 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     if (closeBtn) closeBtn.addEventListener('click', closeLB)
-    lb.addEventListener('click', (e) => {
-      if (e.target === lb) closeLB()
-    })
+    lb.addEventListener('click', (e) => { if (e.target === lb) closeLB() })
     window.addEventListener('keydown', (e) => {
       if (!lb.classList.contains('open')) return
       if (e.key === 'Escape') closeLB()
