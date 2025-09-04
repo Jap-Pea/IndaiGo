@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-JSJR2GKXR5"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag('js', new Date())
+
+      gtag('config', 'G-JSJR2GKXR5')
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IndaiGo</title>
+    <link rel="stylesheet" href="styles/style.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="top">
+      <div class="top__brand">
+        <a href="./">
+          <img class="logo-img" src="assets/indaigo.png" alt="IndaiGo Logo" />
+        </a>
+      </div>
+      <nav class="top__nav" aria-label="Main">
+        <a href="#services">Services</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#insights">Insights</a>
+        <a class="btn btn--sm" href="mailto:justinbp@hotmail.co.nz">Contact</a>
+      </nav>
+      <button
+        class="top__toggle"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+      >
+        ☰
+      </button>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero__grid">
+        <div class="hero__copy">
+          <h1>
+            Innovate. <br />Navigate. <br />Design. <br />Adapt. <br />Inspire.
+            <br />
+            Go...
+          </h1>
+          <p>
+            Welcome to <strong>IndaiGo</strong>, where creativity meets code.
+            I'm currently learning & diving deep into the world of code, game
+            development (Unreal Engine), and some playful web builds. Wanna
+            collab? Let's make something unreal.
+          </p>
+          <a class="btn" href="#services">Get Started</a>
+        </div>
+        <div class="hero__image-index">
+          <img src="assets/design-develop.png" alt="Design and Develop" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="section section--band">
+      <h2 class="section__title">IndaiGo Software & Game Development</h2>
+      <div class="cards">
+        <article class="card">
+          <a href="https://github.com/Jap-Pea" target="_blank" rel="noopener">
+            <img src="assets/github_logo.jpeg" alt="GitHub logo" />
+          </a>
+          <h3>My Github</h3>
+          <p>Not much there at the moment, but will be adding as I learn.</p>
+          <a
+            class="btn"
+            href="https://github.com/Jap-Pea"
+            target="_blank"
+            rel="noopener"
+            >Check it Out</a
+          >
+        </article>
+
+        <article class="card">
+          <img src="assets/mygames.png" alt="Web Games" />
+          <h3>Small Web Games</h3>
+          <p>Only a couple of prototypes</p>
+          <a class="btn" href="web-games.html">Have a Look</a>
+        </article>
+
+        <article class="card">
+          <img src="assets/unreal-engine-5-logo.jpg" alt="Unreal Engine" />
+          <h3>Unreal Engine Projects</h3>
+          <p>Currently in the Making...</p>
+          <a class="btn" href="game-dev.html">Wanna See?</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <h2 class="section__title">Gallery</h2>
+    <section id="gallery" class="section gallery">
+      <img src="assets/IndaiGoCopy.png" alt="IndaiGo" />
+      <img
+        src="assets/ue5screenshots/ue5house.png"
+        alt="Unreal Engine Screenshot House"
+      />
+      <img
+        src="assets/ue5screenshots/ue5moon.png"
+        alt="Unreal Engine Screenshot Moon"
+      />
+      <img src="assets/invaders.png" alt="Unreal Engine Screenshot Cave" />
+      <img
+        src="assets/ue5screenshots/ue5shop.png"
+        alt="Unreal Engine Screenshot Shop"
+      />
+      <img
+        src="assets/ue5screenshots/ue5villa.png"
+        alt="Unreal Engine Screenshot Villa"
+      />
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox" aria-hidden="true">
+      <button class="close" aria-label="Close (Esc)">X</button>
+      <img class="lightbox-content" id="lightbox-img" alt="" />
+      <div id="lightbox-caption" class="lightbox-caption"></div>
+    </div>
+
+    <!-- Quote -->
+    <section class="quote">
+      <p>Code worlds, create dreams, play beyond limits.</p>
+      <span>— IndaiGo</span>
+    </section>
+
+    <!-- Insights -->
+    <section id="insights" class="section section--feature">
+      <img
+        class="feature__image"
+        src="https://images.unsplash.com/photo-1604881987929-3c95b6b51c91?q=80&w=1600&auto=format&fit=crop"
+        alt=""
+      />
+      <h2 class="section__title">Unreal Engine Game Dev Insights</h2>
+
+      <article class="insight">
+        <h3>Building a Map Takes <strong>FOREVER...</strong></h3>
+        <p>
+          Notes from my current project. I can understand why it takes soo long
+          for games to come out.
+        </p>
+        <a class="btn" href="blog/the-beginning.html">Read: My Beginning</a>
+      </article>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>© 2025 IndaiGo. All rights reserved.</p>
+    </footer>
+
+    <script src="scripts/main.js"></script>
+  </body>
+</html>

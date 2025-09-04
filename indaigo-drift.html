@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-JSJR2GKXR5"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag('js', new Date())
+      gtag('config', 'G-JSJR2GKXR5')
+    </script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IndaiGo | Web Games</title>
+    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/drift.css" />
+  </head>
+  <body>
+    <a class="btn" href="https://jap-pea.github.io/IndaiGo/">← Back to Home</a>
+    <!-- Header (same as your site) -->
+    <header class="top">
+      <div class="top__brand">
+        <a href="./">
+          <img class="logo-img" src="assets/indaigo.png" alt="IndaiGo Logo" />
+        </a>
+      </div>
+      <nav class="top__nav" aria-label="Main">
+        <a href="#services">Services</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#insights">Insights</a>
+        <a class="btn btn--sm" href="#contact">Contact</a>
+      </nav>
+      <button
+        class="top__toggle"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+      >
+        ☰
+      </button>
+    </header>
+    <title>IndaiGo Drift</title>
+
+    <h2>IndaiGo Drift</h2>
+    <span>Version 1.0</span>
+
+    <canvas
+      id="game"
+      width="1000"
+      height="800"
+      aria-label="IndaiGo Drift game area"
+    >
+    </canvas>
+    <div class="hud">
+      <span class="badge">Speed: <span id="speed">0</span> km/h</span>
+      <span class="badge">Slide: <span id="slide">0</span>%</span>
+      <span class="badge">Handbrake: <span id="hb">OFF</span></span>
+    </div>
+    <div class="help">
+      Controls: <kbd>W/↑</kbd> Gas, <kbd>S/↓</kbd> Brake/Reverse,
+      <kbd>A/←</kbd> Left, <kbd>D/→</kbd> Right, <kbd>Space</kbd> Handbrake
+    </div>
+
+    <!-- Mobile controls (auto-shown on touch devices) -->
+    <div class="controls" id="controls" aria-hidden="true">
+      <div class="pad" id="steerPad" aria-label="Steering pad">
+        <div class="stick" id="stick"></div>
+      </div>
+      <div class="pedals">
+        <button class="key gas" id="gasBtn">Gas</button>
+        <button class="key brake" id="brakeBtn">Brake</button>
+        <button class="key hand" id="handBtn">Handbrake</button>
+      </div>
+    </div>
+
+    <script src="scripts/drift.js"></script>
+  </body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-JSJR2GKXR5"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag('js', new Date())
+
+      gtag('config', 'G-JSJR2GKXR5')
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IndaiGo Invaders</title>
+    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/invaders.css" />
+  </head>
+  <body class="game-page invaders">
+    <!-- Header (same as home) -->
+    <header class="top">
+      <div class="top__brand">
+        <a href="./">
+          <img class="logo-img" src="assets/indaigo.png" alt="IndaiGo Logo" />
+        </a>
+      </div>
+      <nav class="top__nav" aria-label="Main">
+        <a href="./#services">Services</a>
+        <a href="./#gallery">Gallery</a>
+        <a href="./#insights">Insights</a>
+        <a class="btn btn--sm" href="../index.html">Contact</a>
+      </nav>
+      <button
+        class="top__toggle"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+      >
+        ☰
+      </button>
+    </header>
+
+    <!-- Breadcrumb / back link -->
+    <nav class="section" aria-label="Breadcrumb">
+      <a class="btn" href="https://jap-pea.github.io/IndaiGo/"
+        >← Back to Home</a
+      >
+    </nav>
+    <div class="howto">
+      <strong>How to Play:</strong><br />
+      <span> ← → Move</span> • <span>Space = Shoot</span>
+    </div>
+
+    <div class="updates">
+      <strong>Keep an eye out for future updates</strong>
+      <br />
+      <span>Version 1.1</span>
+    </div>
+
+    <div class="logo-watermark">
+      <img src="assets/IndaiGoCopy.png" alt="IndaiGo Logo" />
+    </div>
+
+    <div class="game-layout wrap">
+      <div class="game-area">
+        <canvas
+          id="game"
+          width="700"
+          height="520"
+          aria-label="IndaiGo Invaders Game Canvas"
+        ></canvas>
+
+        <div class="hud">
+          <span id="score">Score: 0</span> · <span id="lives">Lives: 3</span> ·
+          <div class="panel">
+            <input
+              id="playerName"
+              class="name"
+              type="text"
+              maxlength="24"
+              placeholder="Enter your name"
+            />
+          </div>
+          <button id="start" class="btn">Start Game</button>
+          <button id="restart" class="btn" hidden>Restart</button>
+        </div>
+      </div>
+
+      <aside class="scores">
+        <h4>🏆 High Scores</h4>
+        <ol id="highscores"></ol>
+      </aside>
+    </div>
+
+    <!-- Mobile controls (visible on touch devices) -->
+    <div class="mobile-controls" aria-hidden="true">
+      <button id="btnLeft" class="mc-btn">◀</button>
+      <button id="btnFire" class="mc-btn mc-btn--fire">●</button>
+      <button id="btnRight" class="mc-btn">▶</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>© 2025 IndaiGo. All rights reserved.</p>
+    </footer>
+
+    <script type="module" src="scripts/invaders.js"></script>
+  </body>
+</html>

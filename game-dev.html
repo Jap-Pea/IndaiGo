@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-JSJR2GKXR5"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag('js', new Date())
+      gtag('config', 'G-JSJR2GKXR5')
+    </script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IndaiGo | Game Dev Showcase</title>
+    <link rel="stylesheet" href="styles/style.css" />
+  </head>
+  <body>
+    <!-- Header (same as your site) -->
+    <header class="top">
+      <div class="top__brand">
+        <a href="./">
+          <img class="logo-img" src="assets/indaigo.png" alt="IndaiGo Logo" />
+        </a>
+      </div>
+      <nav class="top__nav" aria-label="Main">
+        <a href="#services">Services</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#insights">Insights</a>
+        <a class="btn btn--sm" href="#contact">Contact</a>
+      </nav>
+      <button
+        class="top__toggle"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+      >
+        ☰
+      </button>
+    </header>
+
+    <main class="gamedev">
+      <!-- Hero -->
+      <section class="wrap gd-hero">
+        <div class="hero__grid">
+          <div class="hero__copy">
+            <h1>Game Dev Showcase — My Zombie Horror (Prototype)</h1>
+            <a class="btn" href="https://jap-pea.github.io/IndaiGo/"
+              >← Back to Home</a
+            >
+            <p>
+              All art/models are free assets. My focus: level layout, AI +
+              controls integration, and learning UE5 workflows.
+            </p>
+          </div>
+        </div>
+        <div class="gd-card">
+          <h4>Quick Stats</h4>
+          <ul class="gd-list">
+            <li>Engine: UE 5.6 (Lumen, World Partition)</li>
+            <li>Focus: AI patrol/chase, first-person camera, level flow</li>
+            <li>More to come!</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Screens -->
+      <section id="screens" class="wrap gd-section">
+        <h2>Screenshots</h2>
+        <div class="gd-gallery">
+          <figure class="gd-shot">
+            <img
+              src="assets/ue5screenshots/ue5house.png"
+              alt="Prototype house environment"
+              data-full="assets/ue5screenshots/ue5house.png"
+            />
+            <span class="gd-badge">...</span>
+            <figcaption>
+              Prototype house environment (lighting + mood)
+            </figcaption>
+          </figure>
+
+          <figure class="gd-shot">
+            <img
+              src="assets/ue5screenshots/ue5cave.png"
+              alt="Cave level WIP"
+              data-full="assets/ue5screenshots/ue5cave.png"
+            />
+            <span class="gd-badge">...</span>
+            <figcaption>Cave level in progress</figcaption>
+          </figure>
+
+          <figure class="gd-shot">
+            <img
+              src="assets/ue5screenshots/ue5shop.png"
+              alt="Shop layout"
+              data-full="assets/ue5screenshots/ue5shop.png"
+            />
+            <span class="gd-badge">...</span>
+            <figcaption>Shop area — flow + sightlines</figcaption>
+          </figure>
+
+          <figure class="gd-shot">
+            <img
+              src="assets/ue5screenshots/ue5villa.png"
+              alt="Villa exterior"
+              data-full="assets/ue5screenshots/ue5villa.png"
+            />
+            <span class="gd-badge">...</span>
+            <figcaption>Villa exterior — blockout to mood pass</figcaption>
+          </figure>
+
+          <figure class="gd-shot">
+            <img
+              src="assets/ue5screenshots/ue5moon.png"
+              alt="Night sky test"
+              data-full="assets/ue5screenshots/ue5moon.png"
+            />
+            <span class="gd-badge">...</span>
+            <figcaption>Night sky / moonlight exploration</figcaption>
+          </figure>
+        </div>
+        <!-- Lightbox Modal -->
+        <div id="lightbox" class="lightbox" aria-hidden="true">
+          <button class="close" aria-label="Close (Esc)">X</button>
+          <img class="lightbox-content" id="lightbox-img" alt="" />
+          <div id="lightbox-caption" class="lightbox-caption"></div>
+        </div>
+      </section>
+
+      <!-- Panels -->
+      <section class="wrap gd-section">
+        <div class="gd-panels">
+          <div class="gd-panel">
+            <div class="gd-meta">
+              <span class="gd-tag">Role: Level design + integration</span>
+              <span class="gd-tag">Tools: UE5, free assets</span>
+            </div>
+            <h3>What I Did</h3>
+            <ul class="gd-list">
+              <li>
+                Integrated a AI system (patrol → chase → search) into my map
+              </li>
+              <li>
+                Set up player controls (movement, interaction, first-person
+                camera)
+              </li>
+              <li>Layered multiple environments into one cohesive level</li>
+            </ul>
+          </div>
+          <div class="gd-panel">
+            <h3>What I Learned</h3>
+            <ul class="gd-list">
+              <li>
+                Combining systems (AI + controls + level streaming) smoothly
+              </li>
+              <li>World Partition quirks and getting meshes to load in PIE</li>
+              <li>Lighting passes: quick mood vs performance trade-offs</li>
+              <li>Bug-hunting and reading warnings to guide tweaks</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cards -->
+      <section class="wrap gd-section">
+        <div class="gd-cards">
+          <article class="gd-card">
+            <h4>Features (status)</h4>
+            <ul class="gd-list">
+              <li>Player Flashlight</li>
+              <li>Pushable Objects</li>
+              <li>Locked Doors/Key Access</li>
+              <li>Polariod + Tv/Video player</li>
+              <li>AI patrol & chase</li>
+              <li>Inventory system</li>
+            </ul>
+          </article>
+          <article class="gd-card">
+            <h4>Next Steps</h4>
+            <ul class="gd-list">
+              <li>Add stamina</li>
+              <li>Replace AI with my own Behavior Trees</li>
+              <li>Create a objective</li>
+            </ul>
+          </article>
+          <article class="gd-card">
+            <h4>Downloads / Demos</h4>
+            <p>Coming soon — For now, try the web mini-games:</p>
+            <p>
+              <a class="gd-btn" href="web-games.html" rel="noopener"
+                >My Web Games</a
+              >
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <!-- Lightbox -->
+    <div
+      class="gd-lightbox"
+      id="gdLightbox"
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Image viewer"
+    >
+      <button class="gd-btn alt gd-close" id="gdClose">Close (Esc)</button>
+      <figure><img id="gdFull" alt="Full view" /></figure>
+    </div>
+
+    <footer id="contact" class="footer">
+      <p>
+        Questions or feedback?
+        <a href="mailto:justinbp@hotmail.co.nz">Email me</a>.
+      </p>
+      <p>© 2025 IndaiGo. All rights reserved.</p>
+    </footer>
+
+    <script src="scripts/main.js"></script>
+  </body>
+</html>
